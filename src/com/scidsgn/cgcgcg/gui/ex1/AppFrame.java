@@ -47,55 +47,59 @@ public class AppFrame extends JFrame {
 
         @Override
         public void keyPressed(KeyEvent e) {
+            double moveDelta = e.isShiftDown() ? 0.35 : 0.1;
+            double rotateDelta = e.isShiftDown() ? 0.15 : 0.04;
+
+            System.out.println(e.getKeyCode() == KeyEvent.VK_W);
             switch (e.getKeyCode()) {
                 // MOTION
                 case KeyEvent.VK_A -> {
-                    state.getCameraCoordinates().move(-0.1, 0, 0);
+                    state.getCameraCoordinates().move(-moveDelta, 0, 0);
                     panel.renderScene();
                 }
                 case KeyEvent.VK_D -> {
-                    state.getCameraCoordinates().move(0.1, 0, 0);
+                    state.getCameraCoordinates().move(moveDelta, 0, 0);
                     panel.renderScene();
                 }
                 case KeyEvent.VK_W -> {
-                    state.getCameraCoordinates().move(0, 0, 0.1);
+                    state.getCameraCoordinates().move(0, 0, moveDelta);
                     panel.renderScene();
                 }
                 case KeyEvent.VK_S -> {
-                    state.getCameraCoordinates().move(0, 0, -0.1);
+                    state.getCameraCoordinates().move(0, 0, -moveDelta);
                     panel.renderScene();
                 }
                 case KeyEvent.VK_Q -> {
-                    state.getCameraCoordinates().move(0, 0.1, 0);
+                    state.getCameraCoordinates().move(0, moveDelta, 0);
                     panel.renderScene();
                 }
                 case KeyEvent.VK_E -> {
-                    state.getCameraCoordinates().move(0, -0.1, 0);
+                    state.getCameraCoordinates().move(0, -moveDelta, 0);
                     panel.renderScene();
                 }
                 // ROTATION
                 case KeyEvent.VK_J -> {
-                    state.getCameraCoordinates().yaw(-0.04);
+                    state.getCameraCoordinates().yaw(-rotateDelta);
                     panel.renderScene();
                 }
                 case KeyEvent.VK_L -> {
-                    state.getCameraCoordinates().yaw(0.04);
+                    state.getCameraCoordinates().yaw(rotateDelta);
                     panel.renderScene();
                 }
                 case KeyEvent.VK_I -> {
-                    state.getCameraCoordinates().pitch(0.04);
+                    state.getCameraCoordinates().pitch(rotateDelta);
                     panel.renderScene();
                 }
                 case KeyEvent.VK_K -> {
-                    state.getCameraCoordinates().pitch(-0.04);
+                    state.getCameraCoordinates().pitch(-rotateDelta);
                     panel.renderScene();
                 }
                 case KeyEvent.VK_U -> {
-                    state.getCameraCoordinates().roll(-0.04);
+                    state.getCameraCoordinates().roll(-rotateDelta);
                     panel.renderScene();
                 }
                 case KeyEvent.VK_O -> {
-                    state.getCameraCoordinates().roll(0.04);
+                    state.getCameraCoordinates().roll(rotateDelta);
                     panel.renderScene();
                 }
                 // ZOOM
@@ -116,12 +120,6 @@ public class AppFrame extends JFrame {
                         Scene scene = state.getScene();
                         scene.getMeshes().clear();
                         scene.getMeshes().add(OBJLoader.load(modelFile));
-
-
-                        CameraCoordinates cameraCoordinates = new CameraCoordinates(new Vector(), 2.8);
-                        cameraCoordinates.getOrigin().set(0, 0, 7);
-                        cameraCoordinates.pitch(Math.PI);
-                        state.setCameraCoordinates(cameraCoordinates);
 
                         panel.renderScene();
 
