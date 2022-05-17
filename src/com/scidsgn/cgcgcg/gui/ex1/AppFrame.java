@@ -50,7 +50,6 @@ public class AppFrame extends JFrame {
             double moveDelta = e.isShiftDown() ? 0.35 : 0.1;
             double rotateDelta = e.isShiftDown() ? 0.15 : 0.04;
 
-            System.out.println(e.getKeyCode() == KeyEvent.VK_W);
             switch (e.getKeyCode()) {
                 // MOTION
                 case KeyEvent.VK_A -> {
