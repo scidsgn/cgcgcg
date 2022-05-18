@@ -1,6 +1,6 @@
 package com.scidsgn.cgcgcg.app.ex1;
 
-import com.scidsgn.cgcgcg.gui.ex1.AppFrame;
+import com.scidsgn.cgcgcg.gui.AppFrame;
 import com.scidsgn.cgcgcg.scene.CameraCoordinates;
 import com.scidsgn.cgcgcg.math.Vector;
 import com.scidsgn.cgcgcg.scene.Scene;

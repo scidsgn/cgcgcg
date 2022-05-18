@@ -1,9 +1,8 @@
-package com.scidsgn.cgcgcg.gui.ex1;
+package com.scidsgn.cgcgcg.gui;
 
+import com.scidsgn.cgcgcg.app.AppStateLike;
 import com.scidsgn.cgcgcg.app.ex1.AppState;
 import com.scidsgn.cgcgcg.loader.OBJLoader;
-import com.scidsgn.cgcgcg.math.Vector;
-import com.scidsgn.cgcgcg.scene.CameraCoordinates;
 import com.scidsgn.cgcgcg.scene.Scene;
 
 import javax.swing.*;
@@ -13,10 +12,10 @@ import java.awt.event.KeyListener;
 import java.io.File;
 
 public class AppFrame extends JFrame {
-    private final AppState state;
+    private final AppStateLike state;
     private final AppPanel panel;
 
-    public AppFrame(AppState state) {
+    public AppFrame(AppStateLike state) {
         super("CGCGCG1 - V: 0, E: 0");
 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -38,7 +37,7 @@ public class AppFrame extends JFrame {
     }
 
     private record AppListener(
-            AppFrame frame, AppState state, AppPanel panel
+            AppFrame frame, AppStateLike state, AppPanel panel
     ) implements KeyListener {
 
         @Override
@@ -115,15 +114,13 @@ public class AppFrame extends JFrame {
                     JFileChooser chooser = new JFileChooser();
                     if (chooser.showOpenDialog(panel) == JFileChooser.APPROVE_OPTION) {
                         File modelFile = chooser.getSelectedFile();
-                        
-                        Scene scene = state.getScene();
-                        scene.getMeshes().clear();
-                        scene.getMeshes().add(OBJLoader.load(modelFile));
+
+                        state.loadScene(modelFile);
 
                         panel.renderScene();
 
                         frame.setTitle(
-                                String.format("CGCGCG1 - V: %d, E: %d", scene.countVertices(), scene.countEdges())
+                                String.format("CGCGCG1 - %s", state.getSceneMetrics())
                         );
                     }
                 }

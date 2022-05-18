@@ -1,17 +1,17 @@
-package com.scidsgn.cgcgcg.gui.ex1;
+package com.scidsgn.cgcgcg.gui;
 
-import com.scidsgn.cgcgcg.app.ex1.AppState;
+import com.scidsgn.cgcgcg.app.AppStateLike;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class AppPanel extends JPanel {
-    private final AppState state;
+    private final AppStateLike state;
 
     private final BufferedImage buffer;
 
-    public AppPanel(AppState state) {
+    public AppPanel(AppStateLike state) {
         setPreferredSize(new Dimension(600, 600));
 
         this.state = state;

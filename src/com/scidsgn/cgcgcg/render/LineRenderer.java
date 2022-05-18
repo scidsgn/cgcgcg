@@ -3,14 +3,13 @@ package com.scidsgn.cgcgcg.render;
 import com.scidsgn.cgcgcg.math.Vector;
 import com.scidsgn.cgcgcg.scene.CameraCoordinates;
 import com.scidsgn.cgcgcg.scene.Mesh;
-import com.scidsgn.cgcgcg.scene.MeshFace;
 import com.scidsgn.cgcgcg.scene.Scene;
 
 import java.awt.Graphics2D;
 import java.util.List;
 import java.util.ArrayList;
 
-public class LineRenderer {
+public class LineRenderer implements Renderer {
     private Scene scene;
     private CameraCoordinates cameraCoordinates;
 
