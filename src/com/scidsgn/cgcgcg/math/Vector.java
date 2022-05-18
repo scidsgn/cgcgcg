@@ -49,6 +49,14 @@ public class Vector {
         set(v.getX(), v.getY(), v.getZ());
     }
 
+    public double length() {
+        return Math.sqrt(getX() * getX() + getY() * getY() + getZ() * getZ());
+    }
+
+    public Vector normal() {
+        return Vector.scale(this, 1.0 / length());
+    }
+
     public static Vector add(Vector a, Vector b) {
         return new Vector(
                 a.getX() + b.getX(),

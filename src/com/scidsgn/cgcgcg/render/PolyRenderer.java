@@ -60,7 +60,15 @@ public class PolyRenderer implements Renderer {
             ys[i] = (int)((vertex.getY() + 1) * 0.5 * height);
         }
 
-        gfx.setPaint(Color.RED);
+        Vector normal = face.getNormal();
+
+        Color normalColor = new Color(
+                (float)Math.max(Math.min(normal.getX() * 0.5 + 0.5, 1.0), 0.0),
+                (float)Math.max(Math.min(normal.getY() * 0.5 + 0.5, 1.0), 0.0),
+                (float)Math.max(Math.min(normal.getZ() * 0.5 + 0.5, 1.0), 0.0)
+        );
+
+        gfx.setPaint(normalColor);
         gfx.fillPolygon(xs, ys, n);
     }
 

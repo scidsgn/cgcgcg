@@ -34,4 +34,11 @@ public class MeshFace {
     public List<Vector> getProcessedVertices() {
         return processedVertices;
     }
+
+    public Vector getNormal() {
+        return Vector.cross(
+                Vector.sub(this.processedVertices.get(0), this.processedVertices.get(1)),
+                Vector.sub(this.processedVertices.get(2), this.processedVertices.get(1))
+        ).normal();
+    }
 }
