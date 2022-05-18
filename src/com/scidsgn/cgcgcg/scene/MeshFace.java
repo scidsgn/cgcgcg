@@ -13,10 +13,18 @@ public class MeshFace {
 
     private final Color color;
 
-    public MeshFace(Color color) {
-        this.vertices = new ArrayList<>();
+    public MeshFace(Color color, List<Vector> vertices) {
+        this.vertices = vertices;
         this.processedVertices = new ArrayList<>();
         this.color = color;
+
+        for (int i = 0; i < vertices.size(); i++) {
+            this.processedVertices.add(null);
+        }
+    }
+
+    public Color getColor() {
+        return color;
     }
 
     public List<Vector> getVertices() {
@@ -25,14 +33,5 @@ public class MeshFace {
 
     public List<Vector> getProcessedVertices() {
         return processedVertices;
-    }
-
-    public static MeshFace make(Color color, Vector ...vertices) {
-        MeshFace face = new MeshFace(color);
-
-        Collections.addAll(face.getVertices(), vertices);
-        Collections.addAll(face.getProcessedVertices(), vertices);
-
-        return face;
     }
 }

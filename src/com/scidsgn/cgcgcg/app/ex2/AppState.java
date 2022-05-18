@@ -1,6 +1,7 @@
 package com.scidsgn.cgcgcg.app.ex2;
 
 import com.scidsgn.cgcgcg.app.AppStateLike;
+import com.scidsgn.cgcgcg.loader.OBJLoader;
 import com.scidsgn.cgcgcg.render.PolyRenderer;
 import com.scidsgn.cgcgcg.scene.CameraCoordinates;
 import com.scidsgn.cgcgcg.scene.Scene2;
@@ -34,8 +35,7 @@ public class AppState implements AppStateLike {
 
     public void loadScene(File sceneFile) {
         scene.getMeshes().clear();
-        // TODO: OBJLoader.load2()
-        //scene.getMeshes().add(OBJLoader.load(sceneFile));
+        scene.getMeshes().add(OBJLoader.load2(sceneFile));
     }
 
     public String getSceneMetrics() {
