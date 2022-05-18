@@ -38,7 +38,9 @@ public class PolyRenderer implements Renderer {
             for (MeshFace face : mesh.getFaces()) {
                 projectFace(face);
 
-                // TODO: eliminate backfacing here
+                if (face.getNormal().getZ() > 0) {
+                    continue;
+                }
 
                 faces.add(face);
             }
