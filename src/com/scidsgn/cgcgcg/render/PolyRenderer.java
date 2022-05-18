@@ -1,6 +1,8 @@
 package com.scidsgn.cgcgcg.render;
 
+import com.scidsgn.cgcgcg.math.Vector;
 import com.scidsgn.cgcgcg.scene.CameraCoordinates;
+import com.scidsgn.cgcgcg.scene.Mesh2;
 import com.scidsgn.cgcgcg.scene.MeshFace;
 import com.scidsgn.cgcgcg.scene.Scene2;
 
@@ -20,24 +22,53 @@ public class PolyRenderer implements Renderer {
     }
 
     private void projectFace(MeshFace face) {
-        // TODO: hmm this!
+        for (int i = 0; i < face.getVertices().size(); i++) {
+            Vector vertex = face.getVertices().get(i);
+
+            face.getProcessedVertices().set(i, cameraCoordinates.project(vertex));
+        }
     }
 
     private List<MeshFace> retrieveFaces() {
         // TODO: all this!
         // retrieve, project, eliminate, sort
-        return new ArrayList<>();
+        List<MeshFace> faces = new ArrayList<>();
+
+        for (Mesh2 mesh : scene.getMeshes()) {
+            for (MeshFace face : mesh.getFaces()) {
+                projectFace(face);
+
+                // TODO: eliminate backfacing here
+
+                faces.add(face);
+            }
+        }
+
+        return faces;
     }
 
-    private void renderFace(MeshFace face) {
+    private void renderFace(Graphics2D gfx, int width, int height, MeshFace face) {
         // TODO: this too...
+        int n = face.getProcessedVertices().size();
+        int[] xs = new int[n];
+        int[] ys = new int[n];
+
+        for (int i = 0; i < n; i++) {
+            Vector vertex = face.getProcessedVertices().get(i);
+
+            xs[i] = (int)((vertex.getX() + 1) * 0.5 * width);
+            ys[i] = (int)((vertex.getY() + 1) * 0.5 * height);
+        }
+
+        gfx.setPaint(Color.RED);
+        gfx.fillPolygon(xs, ys, n);
     }
 
     public void render(Graphics2D gfx, int width, int height) {
         gfx.clearRect(0, 0, width, height);
 
         for (MeshFace face : retrieveFaces()) {
-            renderFace(face);
+            renderFace(gfx, width, height, face);
         }
     }
 }
