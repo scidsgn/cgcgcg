@@ -97,6 +97,12 @@ public class Vector {
                a.getZ() * b.getZ();
     }
 
+    public static Vector mulByScalar(Vector a, double scalar) {
+        return  new Vector(a.getX() * scalar,
+                           a.getY() * scalar,
+                           a.getZ() * scalar);
+    }
+
     public static Vector cross(Vector a, Vector b) {
         return new Vector(
                 a.getY() * b.getZ() - a.getZ() * b.getY(),

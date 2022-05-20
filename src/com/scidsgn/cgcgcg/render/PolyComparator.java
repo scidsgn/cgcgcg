@@ -8,32 +8,40 @@ import java.util.Comparator;
 public class PolyComparator implements Comparator<MeshFace> {
     @Override
     public int compare(MeshFace o1, MeshFace o2) {
+
         if (overlapXYBoundingBoxes(o1, o2)) {
             if(overlapZRanges(o1, o2)) {
                 return compareProjectedCenter(o1, o2);
             }
             return orderByZ(o1, o2);
         }
-        return 0;
+        return orderByZ(o1, o2);
     }
 
     private int compareProjectedCenter(MeshFace o1, MeshFace o2) {
-        //TODO normal, project point, compare
+        //A + dot(AP,AB) / dot(AB,AB) * AB
+
+        Vector o1Centroid = o1.getCentroid();
+        Vector o2Centroid = o2.getCentroid();
+
         Vector normal = o1.getNormal();
-        return 0;
+        Vector projectedO2Centroid;
+        double dot = Vector.dot(Vector.add(o1Centroid, o2Centroid), o1.getNormal());
+
+        projectedO2Centroid = Vector.add(o1Centroid, Vector.mulByScalar(normal, dot) );
+
+        if(projectedO2Centroid.getZ() <  o1Centroid.getZ())
+            return -1;
+        else return 1;
     }
 
     private int orderByZ(MeshFace o1, MeshFace o2) {
-        if ( o1.getMaxCoord(o1.getVertices(), 2) > o2.getMaxCoord(o1.getVertices(), 2) ) {
-            return -1; //if o1 Z is further, it should go to the front in the list
-        } else {
-            return 1;
-        }
+        return Double.compare(o2.getCentroid().getZ(), o1.getCentroid().getZ());
     }
 
     private boolean overlapZRanges(MeshFace o1, MeshFace o2) {
-        return o1.getMinCoord(o1.getProcessedVertices(), 2) <= o2.getMaxCoord(o2.getProcessedVertices(), 2)
-                && o2.getMinCoord(o2.getProcessedVertices(), 2) <= o1.getMaxCoord(o1.getProcessedVertices(), 2);
+        return o1.getMinCoord(o1.getProcessedVertices(), 2) < o2.getMaxCoord(o2.getProcessedVertices(), 2)
+                && o2.getMinCoord(o2.getProcessedVertices(), 2) < o1.getMaxCoord(o1.getProcessedVertices(), 2);
     }
 
     private boolean overlapXYBoundingBoxes(MeshFace o1, MeshFace o2) {

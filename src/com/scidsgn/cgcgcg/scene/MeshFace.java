@@ -4,7 +4,6 @@ import com.scidsgn.cgcgcg.math.Vector;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class MeshFace {
@@ -70,6 +69,17 @@ public class MeshFace {
         }
 
         return max;
+    }
+
+    public Vector getCentroid() {
+        Vector sumVectors = new Vector(0, 0, 0);
+        for (Vector v:processedVertices){
+            sumVectors = Vector.add(sumVectors, v);
+        }
+
+        int l = processedVertices.size();
+        sumVectors.set(sumVectors.getX()/l, sumVectors.getY()/l, sumVectors.getZ()/l);
+        return sumVectors;
     }
 
     public double getMinCoord(List<Vector> verticesToSearch, int index) {
