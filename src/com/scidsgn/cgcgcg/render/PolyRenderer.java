@@ -46,6 +46,8 @@ public class PolyRenderer implements Renderer {
             }
         }
 
+        faces.sort(new PolyComparator());
+
         return faces;
     }
 

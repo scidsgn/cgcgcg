@@ -35,6 +35,80 @@ public class MeshFace {
         return processedVertices;
     }
 
+    public double getMaxCoord(List<Vector> verticesToSearch, int index) {
+        if(index > 2){
+            throw new IndexOutOfBoundsException("Index for coordinates in vertices is wrong: {index}. Out of 0-2 bounds.");
+        }
+        double max;
+
+        switch (index) {
+            case 0 -> {
+                max = verticesToSearch.get(0).getX();
+                for (Vector v : verticesToSearch) {
+                    if (v.getX() > max) {
+                        max = v.getX();
+                    }
+                }
+            }
+            case 1 -> {
+                max = verticesToSearch.get(0).getY();
+                for (Vector v : verticesToSearch) {
+                    if (v.getY() > max) {
+                        max = v.getY();
+                    }
+                }
+            }
+            case 2 -> {
+                max = verticesToSearch.get(0).getZ();
+                for (Vector v : verticesToSearch) {
+                    if (v.getZ() > max) {
+                        max = v.getZ();
+                    }
+                }
+            }
+            default -> throw new IllegalStateException("Unexpected value: " + index);
+        }
+
+        return max;
+    }
+
+    public double getMinCoord(List<Vector> verticesToSearch, int index) {
+        if (index > 2) {
+            throw new IndexOutOfBoundsException("Index for coordinates in vertices is wrong: {index}. Out of 0-2 bounds.");
+        }
+        double min;
+
+        switch (index) {
+            case 0 -> {
+                min = verticesToSearch.get(0).getX();
+                for (Vector v : verticesToSearch) {
+                    if (v.getX() < min) {
+                        min = v.getX();
+                    }
+                }
+            }
+            case 1 -> {
+                min = verticesToSearch.get(0).getY();
+                for (Vector v : verticesToSearch) {
+                    if (v.getY() < min) {
+                        min = v.getY();
+                    }
+                }
+            }
+            case 2 -> {
+                min = verticesToSearch.get(0).getZ();
+                for (Vector v : verticesToSearch) {
+                    if (v.getZ() < min) {
+                        min = v.getZ();
+                    }
+                }
+            }
+            default -> throw new IllegalStateException("Unexpected value: " + index);
+        }
+
+        return min;
+    }
+
     public Vector getNormal() {
         return Vector.cross(
                 Vector.sub(this.processedVertices.get(2), this.processedVertices.get(1)),
