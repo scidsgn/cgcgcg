@@ -39,6 +39,12 @@ public class PolyRenderer implements Renderer {
             for (MeshFace face : mesh.getFaces()) {
                 projectFace(face);
 
+                if (
+                        face.getMaxCoord(face.getProcessedVertices(), 2) < epsilon ||
+                        face.getMinCoord(face.getProcessedVertices(), 2) < epsilon
+                ) {
+                    continue;
+                }
                 if (face.getNormal().getZ() > 0) {
                     continue;
                 }
@@ -76,7 +82,7 @@ public class PolyRenderer implements Renderer {
                 (float)Math.max(Math.min(normal.getZ() * 0.5 + 0.5, 1.0), 0.0)
         );
 
-        gfx.setPaint(normalColor);
+        gfx.setPaint(face.getColor());
         gfx.fillPolygon(xs, ys, n);
 
     }

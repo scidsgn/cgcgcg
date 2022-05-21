@@ -19,6 +19,16 @@ public class MTLLoader {
         return entries;
     }
 
+    public Color getEntry(String name) {
+        for (MTLEntry entry : entries) {
+            if (entry.getName().equals(name)) {
+                return entry.getColor();
+            }
+        }
+
+        return null;
+    }
+
     public static MTLLoader load(File file) {
         MTLLoader loader = new MTLLoader();
 

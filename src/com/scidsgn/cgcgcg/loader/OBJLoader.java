@@ -58,6 +58,9 @@ public class OBJLoader {
         return mesh;
     }
     public static Mesh2 load2(File file) {
+        MTLLoader mtl = null;
+        String currentMaterial = "";
+
         Mesh2 mesh = new Mesh2();
 
         try {
@@ -88,7 +91,21 @@ public class OBJLoader {
                         faceVertices.add(vertices.get(Integer.parseInt(is[0]) - 1));
                     }
 
-                    mesh.getFaces().add(new MeshFace(Color.RED, faceVertices));
+                    Color faceColor = Color.gray;
+                    if (mtl != null) {
+                        Color mtlColor = mtl.getEntry(currentMaterial);
+                        if (mtlColor != null) {
+                            faceColor = mtlColor;
+                        }
+                    }
+
+                    mesh.getFaces().add(new MeshFace(faceColor, faceVertices));
+                } else if (items[0].equals("mtllib") && items.length >= 2) {
+                    String mtlPath = file.getParent() + "\\" + items[1];
+
+                    mtl = MTLLoader.load(new File(mtlPath));
+                } else if (items[0].equals("usemtl") && items.length >= 2) {
+                    currentMaterial = items[1];
                 }
             }
 
