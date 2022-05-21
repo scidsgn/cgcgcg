@@ -25,14 +25,14 @@ public class PolyComparator implements Comparator<MeshFace> {
         Vector o2Centroid = o2.getCentroid();
 
         Vector normal = o1.getNormal();
-        Vector projectedO2Centroid;
-        double dot = Vector.dot(Vector.add(o1Centroid, o2Centroid), o1.getNormal());
 
-        projectedO2Centroid = Vector.add(o1Centroid, Vector.mulByScalar(normal, dot) );
+        double dot = Vector.dot(Vector.add(o1Centroid,normal), o2Centroid);
 
-        if(projectedO2Centroid.getZ() <  o1Centroid.getZ())
-            return -1;
-        else return 1;
+        Vector projectedO2Centroid = Vector.add(o2Centroid, Vector.mulByScalar(Vector.add(o1Centroid,normal), dot));
+
+        if(o1Centroid.getZ() < projectedO2Centroid.getZ())
+            return 1;
+        else return -1;
     }
 
     private int orderByZ(MeshFace o1, MeshFace o2) {

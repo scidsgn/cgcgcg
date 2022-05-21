@@ -46,8 +46,11 @@ public class PolyRenderer implements Renderer {
                 faces.add(face);
             }
         }
-
-        faces.sort(new PolyComparator());
+        try {
+            faces.sort(new PolyComparator());
+        } catch (IllegalArgumentException e) {
+            faces.sort(new CentroidComparator());
+        }
 
         return faces;
     }
@@ -75,6 +78,7 @@ public class PolyRenderer implements Renderer {
 
         gfx.setPaint(normalColor);
         gfx.fillPolygon(xs, ys, n);
+
     }
 
     public void render(Graphics2D gfx, int width, int height) {
