@@ -3,6 +3,7 @@ package com.scidsgn.cgcgcg.gui;
 import com.scidsgn.cgcgcg.app.AppStateLike;
 import com.scidsgn.cgcgcg.app.ex1.AppState;
 import com.scidsgn.cgcgcg.loader.OBJLoader;
+import com.scidsgn.cgcgcg.math.Vector;
 import com.scidsgn.cgcgcg.scene.Scene;
 
 import javax.swing.*;
@@ -116,6 +117,9 @@ public class AppFrame extends JFrame {
                         File modelFile = chooser.getSelectedFile();
 
                         state.loadScene(modelFile);
+
+                        state.getCameraCoordinates().reset(new Vector(0, 0, 7), 2.2);
+                        state.getCameraCoordinates().pitch(Math.PI);
 
                         panel.renderScene();
 

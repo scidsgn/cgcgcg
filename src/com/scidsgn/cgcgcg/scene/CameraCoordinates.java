@@ -33,6 +33,17 @@ public class CameraCoordinates {
         return Vector.scale(local, scaleV);
     }
 
+    public void reset(Vector origin, double focalLength) {
+        for (int x = 0; x < 3; x++) {
+            for (int y = 0; y < 3; y++) {
+                this.matrix.set(x, y, (x == y) ? 1.0 : 0.0);
+            }
+        }
+
+        this.origin.set(origin);
+        this.focalLength = focalLength;
+    }
+
     public double getFocalLength() {
         return focalLength;
     }
