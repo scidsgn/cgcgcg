@@ -12,10 +12,10 @@ public class AppPanel extends JPanel {
     private final BufferedImage buffer;
 
     public AppPanel(AppStateLike state) {
-        setPreferredSize(new Dimension(600, 600));
+        setPreferredSize(new Dimension(800, 800));
 
         this.state = state;
-        this.buffer = new BufferedImage(600, 600, BufferedImage.TYPE_INT_ARGB);
+        this.buffer = new BufferedImage(800, 800, BufferedImage.TYPE_INT_ARGB);
 
         renderScene();
     }

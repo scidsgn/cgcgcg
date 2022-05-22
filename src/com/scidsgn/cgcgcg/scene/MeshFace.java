@@ -119,6 +119,13 @@ public class MeshFace {
         return min;
     }
 
+    public Vector getOriginalNormal() {
+        return Vector.cross(
+                Vector.sub(this.vertices.get(2), this.vertices.get(1)),
+                Vector.sub(this.vertices.get(0), this.vertices.get(1))
+        ).normal();
+    }
+
     public Vector getNormal() {
         return Vector.cross(
                 Vector.sub(this.processedVertices.get(2), this.processedVertices.get(1)),

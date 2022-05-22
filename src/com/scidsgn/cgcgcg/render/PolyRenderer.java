@@ -74,7 +74,10 @@ public class PolyRenderer implements Renderer {
             ys[i] = (int)((vertex.getY() + 1) * 0.5 * height);
         }
 
-        Vector normal = face.getNormal();
+        Vector normal = face.getOriginalNormal();
+        float diffuseLight = (float)Math.max(
+                0.0, Vector.dot(new Vector(0.1, 1, 0.2).normal(), normal)
+        ) * 0.6f + 0.4f;
 
         Color normalColor = new Color(
                 (float)Math.max(Math.min(normal.getX() * 0.5 + 0.5, 1.0), 0.0),
@@ -82,7 +85,13 @@ public class PolyRenderer implements Renderer {
                 (float)Math.max(Math.min(normal.getZ() * 0.5 + 0.5, 1.0), 0.0)
         );
 
-        gfx.setPaint(face.getColor());
+        Color baseColor = face.getColor();
+
+        gfx.setPaint(new Color(
+                diffuseLight * baseColor.getRed() / 255.0f,
+                diffuseLight * baseColor.getGreen() / 255.0f,
+                diffuseLight * baseColor.getBlue() / 255.0f
+        ));
         gfx.fillPolygon(xs, ys, n);
 
     }
